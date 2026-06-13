@@ -2,16 +2,20 @@
 FROM python:3.11 AS builder
 WORKDIR /app
 
+# Create a virtual environment
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
 # Copy only requirements first — pip install is cached if requirements.txt unchanged
 COPY requirements.txt .
-RUN pip install --user --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # ---- Final stage ----
 FROM python:3.11-slim AS final
 WORKDIR /app
 
-# Copy installed packages from builder
-COPY --from=builder /root/.local /root/.local
+# Copy virtual env from builder
+COPY --from=builder /opt/venv /opt/venv
 
 # Copy app source
 COPY app/ ./app/
@@ -20,8 +24,8 @@ COPY app/ ./app/
 RUN adduser --disabled-password --gecos "" --uid 1001 appuser
 USER appuser
 
-# Make sure scripts in .local are usable
-ENV PATH=/root/.local/bin:$PATH
+# Make sure scripts in virtual env are usable
+ENV PATH="/opt/venv/bin:$PATH"
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
