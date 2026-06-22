@@ -25,6 +25,7 @@ redis_client = redis.Redis(
     decode_responses=True
 )
 
+
 CACHE_TTL = 60  # seconds
 
 def get_cached(key: str):
