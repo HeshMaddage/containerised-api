@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends, HTTPException, Response
+from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 from typing import List
 import json
@@ -10,6 +11,10 @@ from .cache import get_cached, set_cache, invalidate_cache
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Task Manager API", version="1.0.0")
+
+@app.get("/")
+def root():
+    return RedirectResponse(url="/docs")
 
 @app.get("/health")
 def health_check():
