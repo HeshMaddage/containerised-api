@@ -1,9 +1,22 @@
 import redis
 import os
 
+redis_host = os.getenv("REDIS_HOST", "localhost")
+if not redis_host or not redis_host.strip():
+    redis_host = "localhost"
+
+redis_port_str = os.getenv("REDIS_PORT", "6379")
+if not redis_port_str or not redis_port_str.strip():
+    redis_port = 6379
+else:
+    try:
+        redis_port = int(redis_port_str)
+    except ValueError:
+        redis_port = 6379
+
 redis_client = redis.Redis(
-    host=os.getenv("REDIS_HOST", "localhost"),
-    port=int(os.getenv("REDIS_PORT", 6379)),
+    host=redis_host,
+    port=redis_port,
     decode_responses=True
 )
 
