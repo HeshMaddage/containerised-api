@@ -327,18 +327,8 @@ Containers are ephemeral by design — but your data shouldn't be. `docker compo
 
 ---
 
-## What's next (Week 2)
-
-This project becomes the base for **Project 2** — adding a full CI/CD pipeline:
-- GitHub Actions: lint (ruff) → test (pytest) → build Docker image → push to Docker Hub → auto-deploy to Railway
-- Every `git push` to `main` triggers the full pipeline
-- Branch protection: CI must pass before any merge to `main`
-
----
-
 ## Author
 
-**Hesh Maddage** — CS undergraduate @ University of Sri Lanka  
+**Hesh Maddage** — CS undergraduate @ University of Sri Jayewardenepura
 Building across AI Engineering · MLOps · DevOps · Cloud · Automation
 
-[GitHub](https://github.com/HeshMaddage) · [LinkedIn](https://linkedin.com/in/heshmaddage)
